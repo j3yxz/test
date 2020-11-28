@@ -26,20 +26,37 @@ void stampa(NODOLISTA *ptr)
 /* implementazione della funzione da scrivere, specificando i parametri formali */
 int  elimina( int KEY, NODOLISTA* *proot  )
 {
-	while ( (*proot) != NULL )
+	/* i need a new pointer or the root pointer will no longer point at the start of the list */
+	NODOLISTA* tmp=*proot;
+	if( (*proot)->key == KEY )
 	{
-		if( (*proot)->key == KEY )
+	/* this is the code if the first element in the list must be deleted */
+	/* only here the proot pointer can be modiefied */
+		*proot = (*proot)->next;
+		free(tmp);
+			
+	/* se commento questo return elimino tutti gli elementi con campo key */
+	/* uguale a KEY, altrimenti ne elimino solo uno */
+	/* i commenti sopra sono giusti e andrebbe fatta la stessa cosa nel ciclo while successivo per eliminare tutte le occorrenze */
+		return(1); 
+	}
+	/* mi serve un'altro puntatore per attaccare i due elementi saltando quello da eliminare */
+	NODOLISTA* prev = tmp;
+	tmp= tmp->next;
+	while ( tmp != NULL )
+	{
+		if(tmp->key == KEY)
 		{
-			NODOLISTA *next = (*proot)->next;
-			free(*proot);
-			*proot=next;
-			/* se commento questo break elimino tutti gli elementi con campo key */
-			/* uguale a KEY, altrimenti ne elimino solo uno */
-			return(1); 
+			prev->next=tmp->next;
+			free(tmp);
+			/* stesso discorso fatto sopora, se voglio eliminare tutte le occorrenze di KEY nella lista,
+			devo togliere il return alla riga sotto */
+			return 1;
 		}
-		else
+		else (
 		{
-			proot = &( (*proot)->next );
+			prev=tmp;
+			tmp= tmp->next;
 		}
 	}
 	return(0);
