@@ -155,6 +155,7 @@ int main ( int argc, char* argv[] )
 	uintptr_t i=0;
 	int seme;
 	void *join_retval;
+	char Plabel[128];
 	/* aggiungete eventuali vostre variabili */
 
 
@@ -163,7 +164,8 @@ int main ( int argc, char* argv[] )
 
 	/* INIZIALIZZATE LE VOSTRE VARIABILI CONDIVISE e tutto quel che serve - fate voi */
 
-
+    DBGpthread_mutex_init(&mutex, NULL, Plabel);
+    DBGpthread_cond_init(&cond, NULL, Plabel);
 	/* all'inizio non c'e' nessun piattello in volo */
 
 
